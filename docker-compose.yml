@@ -22,6 +22,7 @@ services:
       - ./bin/migrations:/usr/local/bin/migrations
     environment:
       - ENV=development
+      - API_KEY=C6E84D247E2D81B5B45D6D2D229D9
     depends_on:
       - rabbit
 

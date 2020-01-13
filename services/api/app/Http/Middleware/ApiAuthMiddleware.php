@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Response;
 
 class ApiAuthMiddleware
 {
@@ -15,6 +16,13 @@ class ApiAuthMiddleware
      */
     public function handle($request, Closure $next)
     {
+        if ($request->headers->get('x-api-key') !== getenv('API_KEY')) {
+            $response = new Response();
+            $response->setStatusCode(401);
+
+            return $response;
+        }
+
         return $next($request);
     }
 }
