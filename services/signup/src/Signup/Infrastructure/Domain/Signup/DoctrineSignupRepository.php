@@ -8,9 +8,10 @@ use Repository\DoctrineRepository;
 use Signup\Signup;
 use Signup\SignupAddedEvent;
 use Signup\SignupNotFoundException;
+use Signup\SignupReadRepository;
 use Signup\SignupRepository;
 
-class DoctrineSignupRepository extends DoctrineRepository implements DomainEventListener, SignupRepository
+class DoctrineSignupRepository extends DoctrineRepository implements DomainEventListener, SignupRepository, SignupReadRepository
 {
 	const ENTITY_CLASS = Signup::class;
 
@@ -45,5 +46,18 @@ class DoctrineSignupRepository extends DoctrineRepository implements DomainEvent
 		}
 
 		throw new SignupNotFoundException();
+	}
+
+	public function getByEmailAddress($emailAddress): Signup
+	{
+		$signup = $this->getEntityManager()
+			->getRepository(static::ENTITY_CLASS)
+			->findOneBy(['emailAddress' => $emailAddress]);
+
+		if (!$signup) {
+			throw new SignupNotFoundException();
+		}
+
+		return $signup;
 	}
 }

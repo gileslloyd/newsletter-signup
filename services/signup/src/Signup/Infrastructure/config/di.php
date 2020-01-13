@@ -24,6 +24,7 @@ return [
 	'add_signup_service' => [
 		Signup\AddSignupService::class,
 		[
+			'read_signup_repository',
 			'write_signup_repository',
 			new \Application\Signup\SignupValidationService(),
 		]
