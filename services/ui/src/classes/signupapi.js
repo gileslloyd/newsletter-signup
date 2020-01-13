@@ -15,7 +15,7 @@ axios.defaults.validateStatus = (status) => {
 const env = process.env.NODE_ENV;
 const dev = env !== "production";
 
-var FeaturesAPI = {
+var SignupAPI = {
     config: {
         domain: dev ? 'http://api.local/' : 'https://api.features.aws.prop.cm/'
     },
@@ -37,4 +37,4 @@ var FeaturesAPI = {
     }
 };
 
-export default FeaturesAPI;
+export default SignupAPI;

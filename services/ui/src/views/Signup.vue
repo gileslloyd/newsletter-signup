@@ -10,10 +10,10 @@
             <div class="content">
                 <form method="POST" action="" @submit.prevent="signup">
 
-                    <input id="first_name" type="text" name="first_name" title="first_name" placeholder="First Name" v-model="email_address" required autofocus>
-                    <input id="surname" type="email" name="surname" title="surname" placeholder="Email" v-model="email_address" required>
-                    <input id="email" type="email" name="email" title="email" placeholder="Email" v-model="email_address" required>
-                    <input id="password" type="password" name="password" title="password" v-model="password" placeholder="Password" required>
+                    <input id="first_name" type="text" name="first_name" title="first_name" placeholder="First Name" v-model="first_name" required autofocus>
+                    <input id="surname" type="text" name="surname" title="surname" placeholder="Surname" v-model="surname" required>
+                    <input id="email_address" type="email" name="email_address" title="email_address" placeholder="Email Address" v-model="email_address" required>
+                    <input id="confirm_email" type="email" name="confirm_email" title="confirm_email" v-model="confirm_email" placeholder="Confirm Email" required>
 
                     <p class="help is-danger" v-show="validationFailed">
                         Invalid email address or password
@@ -36,8 +36,10 @@
 
         data() {
             return {
+                'first_name': '',
+                'surname': '',
                 'email_address': '',
-                'password': '',
+                'confirm_email': '',
                 'validationFailed': false,
             }
         },
@@ -84,7 +86,7 @@
         padding: 2rem 2.5rem 5rem;
     }
 
-    #email, #password {
+    input {
         display: block;
         width: 100%;
         font-size: 1rem;
