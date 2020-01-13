@@ -7,12 +7,19 @@
     "require": {
         "php": "^7.2",
         "laravel/lumen-framework": "^6.0",
-        "php-amqplib/php-amqplib": "^2.11"
+        "php-amqplib/php-amqplib": "^2.11",
+        "cableandcode/microservice-core": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.4",
         "phpunit/phpunit": "^8.0",
         "mockery/mockery": "^1.0"
+    },
+    "repositories": {
+        "0": {
+            "type": "git",
+            "url": "https://giles_lloyd@bitbucket.org/giles_lloyd/microservice-core.git"
+        }
     },
     "autoload": {
         "classmap": [
