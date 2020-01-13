@@ -10,10 +10,3 @@ setup:
 
 migrations:
 	@docker-compose exec app /usr/local/bin/migrations ${S} ${C}
-
-create-service:
-	@docker-compose exec app /usr/local/bin/add-service ${S}
-
-restart:
-	@docker-compose stop ${S}-service
-	@docker-compose up -d ${S}-service
