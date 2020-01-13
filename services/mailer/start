@@ -1,0 +1,4 @@
+#!/usr/bin/env php
+<?php
+
+require './src/Mailer/Infrastructure/Delivery/RPC/run.php';

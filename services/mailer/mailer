@@ -1,0 +1,4 @@
+#!/usr/bin/env php
+<?php
+
+require './src/Mailer/Infrastructure/Delivery/Cli/application.php';

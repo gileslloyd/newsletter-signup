@@ -1,0 +1,38 @@
+#!/bin/bash
+
+SERVICE=$1
+COMMAND=$2
+
+ROOTPATH="/usr/local/bin"
+
+cd $ROOTPATH
+
+COMPOSERSCRIPT=$ROOTPATH/composer.phar
+if [ ! -f "$COMPOSERSCRIPT" ]; then
+    echo "Installing Composer"
+    curl -s https://getcomposer.org/installer | php
+    echo "Done"
+fi
+
+if [ $SERVICE == "all" ]; then
+    echo "Running in all services"
+
+    SERVICES=/var/www/vhosts/*
+
+    for dir in $SERVICES
+    do
+      if [ -f "$dir/composer.json" ]; then
+        cd $dir
+        php $COMPOSERSCRIPT $COMMAND
+      fi
+    done
+else
+    echo "Running in $SERVICE"
+
+    if [ -f "/var/www/vhosts/$SERVICE/composer.json" ]; then
+        cd /var/www/vhosts/$SERVICE
+        php $COMPOSERSCRIPT $COMMAND
+    else
+        echo "No composer.json in service"
+    fi
+fi

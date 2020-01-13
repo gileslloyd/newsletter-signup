@@ -1,0 +1,27 @@
+#!/bin/bash
+
+SERVICE=$1
+COMMAND=$2
+
+if [ $SERVICE == "all" ]; then
+    echo "Running in all services"
+
+    SERVICES=/var/www/vhosts/*
+
+    for dir in $SERVICES
+    do
+      if [ -f "$dir/bin/migrations" ]; then
+        cd $dir/bin
+        ./migrations $COMMAND
+      fi
+    done
+else
+    echo "Running in $SERVICE"
+
+    if [ -f "/var/www/vhosts/$SERVICE/bin/migrations" ]; then
+        cd /var/www/vhosts/$SERVICE/bin
+        ./migrations $COMMAND
+    else
+        echo "No migration file in service"
+    fi
+fi
