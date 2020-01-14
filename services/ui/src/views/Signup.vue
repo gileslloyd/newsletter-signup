@@ -1,38 +1,54 @@
 <template>
 
-    <div id="signup-form">
-        <div class="signup-card">
+    <section>
 
-            <div class="card-title">
-                <h1>Sign-up for all the latest</h1>
-            </div>
+        <div id="signup-form">
+            <div class="signup-card">
 
-            <div class="content">
-                <form method="POST" action="" @submit.prevent="signup">
+                <div class="card-title">
+                    <h1>Sign-up for all the latest</h1>
+                </div>
 
-                    <input id="first_name" type="text" name="first_name" title="first_name" placeholder="First Name" v-model="first_name" required autofocus>
-                    <input id="surname" type="text" name="surname" title="surname" placeholder="Surname" v-model="surname" required>
-                    <input id="email_address" type="email" name="email_address" title="email_address" placeholder="Email Address" v-model="email_address" required>
-                    <input id="confirm_email" type="email" name="confirm_email" title="confirm_email" v-model="confirm_email" placeholder="Confirm Email" required>
+                <div class="content">
+                    <form method="POST" action="" @submit.prevent="signup">
 
-                    <p class="help is-danger" v-show="validationFailed">
-                        {{ error }}
-                    </p>
+                        <input id="first_name" type="text" name="first_name" title="first_name" placeholder="First Name" v-model="first_name" required autofocus>
+                        <input id="surname" type="text" name="surname" title="surname" placeholder="Surname" v-model="surname" required>
+                        <input id="email_address" type="email" name="email_address" title="email_address" placeholder="Email Address" v-model="email_address" required>
+                        <input id="confirm_email" type="email" name="confirm_email" title="confirm_email" v-model="confirm_email" placeholder="Confirm Email" required>
 
-                    <button type="submit" class="btn btn-primary">Sign me up!</button>
-                </form>
+                        <p class="help is-danger" v-show="validationFailed">
+                            {{ error }}
+                        </p>
+
+                        <button type="submit" class="btn btn-primary">Sign me up!</button>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
+
+        <modal v-show="successModalIsVisible" @close="resetForm()">
+
+            <template v-slot:title>Sign-up Complete</template>
+
+            <p>{{ email_address }} is now signed up to our mailing list</p>
+            <p>You are definitely <i>not</i> going to get spammed!</p>
+
+        </modal>
+
+    </section>
 
 </template>
 
 <script>
     import SignupAPI from './../classes/signupapi.js';
+    import modal from './../components/Modal.vue';
 
     export default {
 
         name: 'Signup',
+
+        components: { modal },
 
         data() {
             return {
@@ -41,7 +57,8 @@
                 'email_address': '',
                 'confirm_email': '',
                 'validationFailed': false,
-                'error': ''
+                'error': '',
+                'successModalIsVisible': false
             }
         },
 
@@ -56,6 +73,7 @@
                 this.surname = '';
                 this.email_address = '';
                 this.confirm_email = '';
+                this.successModalIsVisible = false;
             },
 
             signup() {
@@ -71,8 +89,7 @@
                         confirm_email: this.confirm_email
                     },
                     (response) => {
-                        console.log(response);
-                        // self.resetForm();
+                        self.successModalIsVisible = true;
                     },
                     (error) => {
                         self.error = error.response.data.body.error;
