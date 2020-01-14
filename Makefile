@@ -6,7 +6,6 @@ composer:
 
 setup:
 	@docker-compose up -d app signup-db
-	@docker-compose up -d signup-db
 	@make composer S=all C=install
 	@make migrations S=all C=migrate
 
