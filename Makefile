@@ -5,7 +5,7 @@ composer:
 	@docker-compose exec app /usr/local/bin/composer ${S} ${C}
 
 setup:
-	@docker-compose up app -d
+	@docker-compose up -d app signup-db
 	@make composer S=all C=install
 	@make migrations S=all C=migrate
 
