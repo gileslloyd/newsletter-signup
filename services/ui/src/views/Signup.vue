@@ -16,7 +16,7 @@
                     <input id="confirm_email" type="email" name="confirm_email" title="confirm_email" v-model="confirm_email" placeholder="Confirm Email" required>
 
                     <p class="help is-danger" v-show="validationFailed">
-                        Invalid email address or password
+                        {{ error }}
                     </p>
 
                     <button type="submit" class="btn btn-primary">Sign me up!</button>
@@ -41,12 +41,44 @@
                 'email_address': '',
                 'confirm_email': '',
                 'validationFailed': false,
+                'error': ''
             }
         },
 
         methods: {
+            clearError() {
+                this.error = '';
+                this.validationFailed = true;
+            },
+
+            resetForm() {
+                this.first_name = '';
+                this.surname = '';
+                this.email_address = '';
+                this.confirm_email = '';
+            },
+
             signup() {
+                this.clearError();
                 let self = this;
+
+                SignupAPI.post(
+                    'signup',
+                    {
+                        first_name: this.first_name,
+                        surname: this.surname,
+                        email_address: this.email_address,
+                        confirm_email: this.confirm_email
+                    },
+                    (response) => {
+                        console.log(response);
+                        // self.resetForm();
+                    },
+                    (error) => {
+                        self.error = error.response.data.body.error;
+                        self.validationFailed = true;
+                    }
+                );
             }
         }
 
